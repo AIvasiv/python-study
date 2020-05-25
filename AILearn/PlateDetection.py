@@ -3,7 +3,10 @@ import cv2
 import  imutils
 
 # Read the image.
-platePicture = cv2.imread('volvos.jpg')
+from scipy.sparse import csr_matrix
+from sklearn.preprocessing import binarize
+platePicture = cv2.imread('../volvos.jpg')
+e1 = cv2.getTickCount()
 
 # Resize the image - change width to 500
 platePicture = imutils.resize(platePicture, width=500)
@@ -28,15 +31,27 @@ cnts, hierarchy = cv2.findContours(edged.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX
 print('test', cnts)
 cnts=sorted(cnts, key = cv2.contourArea, reverse = True)[:30] #sort contours based on their area keeping minimum required area as '30' (anything smaller than this will not be considered)
 NumberPlateCnt = None #we currently have no Number plate contour
+e2 = cv2.getTickCount()
+
+def jaccard_similarity(list1, list2):
+    s1 = set(list1)
+    s2 = set(list2)
+    return len(s1.intersection(s2)) / len(s1.union(s2))
+
 
 # loop over our contours to find the best possible approximate contour of number plate
 count = 0
 for c in cnts:
         peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.02 * peri, True)
+
         if len(approx) == 4:  # Select the contour with 4 corners
             NumberPlateCnt = approx #This is our approx Number Plate Contour
             break
+
+print('*******jaccard_similarity********');
+t = (e2 - e1)/cv2.getTickFrequency()
+print (t)
 
 
 # Drawing the selected contour on the original image
@@ -44,3 +59,5 @@ cv2.drawContours(platePicture, [NumberPlateCnt], -1, (0,255,0), 3)
 cv2.imshow("Final Image With Number Plate Detected", platePicture)
 
 cv2.waitKey(0) #Wait for user input before closing the images displayed
+
+
