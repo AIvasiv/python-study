@@ -20,19 +20,22 @@ def test_string_concatenation():
 
 #*****************************
 #basic function for user inputs editing
-def build_user_inputs(lis_of_all_user_inputs):
-    while(user_input != '/end'):
+def build_user_inputs():
+    lis_of_all_user_inputs = []
+    while(True):
         temp_string = input('Please, enter the message: ').capitalize()
         user_input = temp_string
         if(temp_string[len(temp_string)-1] != '.' or temp_string[len(temp_string)-1] != '?' or temp_string[len(temp_string)-1] != '!'):
             temp_string += '.'
         lis_of_all_user_inputs.append(temp_string)
+        if(user_input == '/end'):
+            break
     return lis_of_all_user_inputs
 
 #*****************************
 #list comprehension basics
-def delete_string_from_list(my_combined_list ):
+def delete_string_from_list(my_combined_list):
     return [iterator for iterator in my_combined_list if type(iterator)!=str]
 
 
-
+build_user_inputs()
