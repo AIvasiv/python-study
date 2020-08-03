@@ -17,7 +17,6 @@ def test_string_concatenation():
     message2 = "Hello %s" % (user_input_string)
     print(message1) 
 
-
 #*****************************
 #basic function for user inputs editing
 def build_user_inputs():
@@ -37,5 +36,18 @@ def build_user_inputs():
 def delete_string_from_list(my_combined_list):
     return [iterator for iterator in my_combined_list if type(iterator)!=str]
 
+#*****************************
+#calculate the average of user inputs - function with an arbitrary number of non-keyword arguments
+def calculate_average(*args):
+    return sum(args)/len(args)
 
-build_user_inputs()
+#*****************************
+#function that takes an infinite numbers of string parameters and returns a list containing all the strings in uppercase
+#and sorted alphabetically
+def my_function(*args):
+    return [iterator.upper() for iterator in  sorted(args)]
+
+#*****************************
+#function with an arbitrary number of keyword arguments
+def find_sum(**kwargs):
+    return sum(kwargs.values())
