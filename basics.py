@@ -51,3 +51,34 @@ def my_function(*args):
 #function with an arbitrary number of keyword arguments
 def find_sum(**kwargs):
     return sum(kwargs.values())
+
+#*****************************
+#function reads the file and prints out the first 90 characters of content
+def read_crop_file():
+    with open("files/fruits.txt", "r") as myfile:
+        content_file = myfile.read()
+        print(content_file[:90])
+        
+#*****************************
+#function that returns the number of occurances of first paramter in the file that is defined in second parameter
+def read_crop_file2(string_var, filepath_var):
+    i = 0
+    with open(filepath_var, "r") as myfile:
+        content_file = myfile.read()
+        for iterator in content_file:
+            if (iterator == string_var):
+                i = i + 1
+    return i
+
+#*****************************
+#function creates file from cropped string in previous function
+def create_file_from_cropped():
+    with open("first.txt", "w") as file_created:
+        file_created.write(read_crop_file())
+
+#*****************************
+#function that opens and read the first file an d then appends text from the first file to the second one
+def append_text_to_file():
+    with open("bear1.txt", "r") as bear1_file:
+        with open("bear2.txt", "a+") as bear2_file:
+            bear2_file.write(bear1_file.read())
